@@ -17,5 +17,21 @@ admin
 
 sysctl net.bridge.bridge-nf-call-iptables=0
 
-docker run --rm -v "$(pwd):/usr/src" --net host sonarsource/sonar-scanner-cli -Dsonar.projectKey=nodejs -Dsonar.login=admin -Dsonar.password=admin -Dsonar.sources=/usr/src -Dsonar.host.url=http://192.168.0.5:9000/ -Donar.scm.disabled=True --debug 
+-----------------------------
+
+docker network ls
+docker inspect bridge
+
+firewall-cmd --zone=public --add-masquerade --permanent
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+firewall-cmd --zone=public --add-port=443/tcp --permanent
+firewall-cmd --zone=public --add-port=9000/tcp --permanent
+firewall-cmd --zone=public --add-port=8081/tcp --permanent
+firewall-cmd --zone=public --add-port=8181/tcp --permanent
+firewall-cmd --zone=public --add-port=8182/tcp --permanent
+firewall-cmd --reload
+
+
+cd /opt/project/reto-jenkins/nodejs
+docker run --rm -v "$(pwd):/usr/src" sonarsource/sonar-scanner-cli -Dsonar.projectKey=nodejs -Dsonar.login=admin -Dsonar.password=admin -Dsonar.sources=/usr/src -Dsonar.host.url=http://172.17.0.1:9000/ -Donar.scm.disabled=True --debug 
 
