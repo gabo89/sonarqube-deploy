@@ -1,0 +1,21 @@
+
+
+add sonarqubecompose.service in /etc/systemd/system
+
+ls -ls /etc/systemd/system/sonarqubecompose.service 
+
+systemctl enable sonarqubecompose.service
+systemctl start sonarqubecompose.service
+systemctl status sonarqubecompose.service
+
+docker exec -it running_sonarqube bash
+
+run on port 9000
+-----------------------------
+admin
+admin
+
+sysctl net.bridge.bridge-nf-call-iptables=0
+
+docker run --rm -v "$(pwd):/usr/src" --net host sonarsource/sonar-scanner-cli -Dsonar.projectKey=nodejs -Dsonar.login=admin -Dsonar.password=admin -Dsonar.sources=/usr/src -Dsonar.host.url=http://192.168.0.5:9000/ -Donar.scm.disabled=True --debug 
+

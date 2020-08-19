@@ -1,0 +1,17 @@
+version: '2'
+services:
+  sonarqube:
+    container_name: running_sonarqube
+    image: sonarqube:latest   
+    ports:
+    - "9000:9000"
+    volumes:
+    - installsonarqube:/opt/sonarqube
+    networks:
+    - sonarqube
+networks:
+  sonarqube:
+volumes:
+  installsonarqube:
+
+ 
